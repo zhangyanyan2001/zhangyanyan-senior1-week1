@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangyanyan.senior1.week1.dao.MovieMapper">
+	<select id="list" resultType="movie">
+		select * from movie
+		<where>
+			<!-- 影片名称 -->
+			<if test="name!=null and name!=''">
+				name like "%"#{name}"%"
+			</if>
+			
+			<!-- 影片导演名称 -->
+			<if test="dao!=null and dao!=''">
+				and dao like "%"#{dao}"%"
+			</if>
+			
+			<!-- 影片年代 -->
+			<if test="year!=null and year!=''">
+				 year like "%"#{year}"%"
+			</if>
+			
+			<!-- 上映时间 -->
+			<if test="startuptime!=null and startuptime!=''">
+				and uptime >= #{startuptime}
+			</if>
+			<if test="enduptime!=null and enduptime!=''">
+				and uptime &lt;= #{enduptime}
+			</if>
+			
+			<!-- 票价 -->
+			<if test="startprice!=null and startprice!=0">
+				and price >= #{startprice}
+			</if>
+			<if test="endprice!=null and endprice!=0">
+				and price &lt;= #{endprice}
+			</if>
+			
+			<!-- 影片时长 -->
+			<if test="startlongtime!=null and startlongtime!=''">
+				and longtime >= #{startlongtime}
+			</if>
+			<if test="endlongtime!=null and endlongtime!=''">
+				and longtime &lt;= #{endlongtime}
+			</if>
+		</where>
+	</select>
+	
+	<delete id="del">
+		delete from movie where ids in (${ids})
+	</delete>
+</mapper>
